@@ -17,9 +17,9 @@ css與js搭配做一個時鐘
 ```javascript=
 const nowTime = new Date();
 ```
-nowTime.getSeconds() 取得當前秒數
-nowTime.getMinutes() 取得當前分鐘
-nowTime.getHours() 取得當前小時
+nowTime.getSeconds() 取得當前秒數  
+nowTime.getMinutes() 取得當前分鐘  
+nowTime.getHours() 取得當前小時  
 
 ### setInterval()
 計時器，有兩個參數setInterval(callback,time)
