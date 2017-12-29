@@ -132,4 +132,3 @@ const transportation = data.reduce(function( obj , item) {
 }, {});
 console.log(transportation);
 ```
-## CSS語法&備註
