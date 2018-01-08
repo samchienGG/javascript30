@@ -1,4 +1,4 @@
-# js30-04 記錄&心得
+# js30-04 記錄&心得-Array Cardio Day 1
 
 ## 主題
 >熟悉 Array 的幾個基本方法
@@ -30,7 +30,7 @@ const fifteen = inventors.filter(function(e){
 
 2.將inventors內的first與last組合成一個陣列
 ### map()
->透過map來將firstName/lastNam組合返回陣列
+>map會把陣列中的每個元素執行回呼函式一次
 ```javascript=
 const fullNames = inventors.map(function(e){
     return e.first+' '+ e.last;
