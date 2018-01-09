@@ -32,6 +32,6 @@ const comments = [
 ### find()
 >`find()`跟`filter()`很像，會對陣列中的元素進行測試，但只會回傳第一個符合條件的值，若沒有符合的，及回傳`undefined`
 ### findIndex()，slice()，splice()
->`findIndex()`依據提供的測試函式，尋找陣列中符合的元素，並回傳其所引值。如果沒有符合對象，及回傳-1
->[slice()](https://msdn.microsoft.com/zh-tw/library/tkcsy6fe(v=vs.94).aspx) `arrayObj(start,[end])`回傳陣列的一部分，會複製元素一直到 end 所代表的元素，但並不包括此元素
+>`findIndex()`依據提供的測試函式，尋找陣列中符合的元素，並回傳其所引值。如果沒有符合對象，及回傳-1  
+>[slice()](https://msdn.microsoft.com/zh-tw/library/tkcsy6fe(v=vs.94).aspx) `arrayObj(start,[end])`回傳陣列的一部分，會複製元素一直到 end 所代表的元素，但並不包括此元素  
 >[splice()](https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Reference/Global_Objects/Array/splice) 刪除或新增陣列內容
