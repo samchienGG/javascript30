@@ -6,7 +6,6 @@
 * subtree modifications: 當子元素點發生變化時
 * arrtibute modifications: 當元素發生變化時
 * node removal: 當元素被移除時
-* 使用方法如下圖
 ![](https://i.imgur.com/zSfhz60.jpg)
 
 ### console.log('%s', value)
