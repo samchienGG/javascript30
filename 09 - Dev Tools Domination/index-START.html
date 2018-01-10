@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Console Tricks!</title>
+</head>
+<body>
+
+  <p onClick="makeGreen()">×BREAK×DOWN×</p>
+
+  <script>
+    const dogs = [{ name: 'Snickers', age: 2 }, { name: 'hugo', age: 8 }];
+
+    function makeGreen() {
+      const p = document.querySelector('p');
+      p.style.color = '#BADA55';
+      p.style.fontSize = '50px';
+    }
+
+    // Regular
+    console.log('hello');
+    // Interpolated
+    console.log('hello i am a %s string!','@@');
+    // Styled
+    console.log('%c不要偷看','font-family:微軟正黑體;font-size:30px; color:#f00;');
+    // warning!
+    console.warn('不要偷看');
+    // Error :|
+    console.error('不要偷看');
+    // Info
+    console.info('不要偷看');
+    // Testing
+    console.assert(1==2,'that is wrong');
+    console.assert(1==1,'that is right');
+    // clearing
+    // console.clear();
+    // Viewing DOM Elements
+    const p = document.querySelector('p');
+    console.log(p);
+    console.dir(p);
+    // Grouping together
+
+    dogs.forEach(function(dog) {
+        console.groupCollapsed(dog.name);
+      console.log('This is' + dog.name);
+      console.groupEnd(dog.name);
+    })
+    // counting
+    console.count('Wes');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Wes');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    console.count('Steve');
+    // timing
+    console.time('fetching data');
+    fetch('https://api.github.com/users/samchienGG')
+    .then(function(data) {
+      return data.json();
+    })
+    .then(function(data) {
+      console.timeEnd('fetching data');
+      console.log(data);
+    });
+    console.table(dogs);
+  </script>
+</body>
+</html>
