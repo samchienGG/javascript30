@@ -1,4 +1,4 @@
-# js30-08紀錄&心得-Dev Tools Domination
+# js30-09紀錄&心得-Dev Tools Domination
 ## 目標
 >介紹console用法
 ### DOM BREAK ON
