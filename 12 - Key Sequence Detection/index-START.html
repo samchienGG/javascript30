@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Key Detection</title>
+  <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script>
+  <style type="text/css">
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .box {
+        width: 100vw;
+        height: 100vh;
+        display: none;
+    	background-color: #000;
+    	background-image:repeating-linear-gradient(90deg, transparent, transparent 50px,
+      rgba(255, 127, 0, 0.25) 50px, rgba(255, 127, 0, 0.25) 56px, transparent 56px, transparent 63px,
+      rgba(255, 127, 0, 0.25) 63px, rgba(255, 127, 0, 0.25) 69px, transparent 69px, transparent 116px,
+      rgba(255, 206, 0, 0.25) 116px, rgba(255, 206, 0, 0.25) 166px),
+    	repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(255, 127, 0, 0.25) 50px,
+      rgba(255, 127, 0, 0.25) 56px, transparent 56px, transparent 63px, rgba(255, 127, 0, 0.25) 63px,
+      rgba(255, 127, 0, 0.25) 69px, transparent 69px, transparent 116px, rgba(255, 206, 0, 0.25) 116px,
+      rgba(255, 206, 0, 0.25) 166px),
+    	repeating-linear-gradient(-45deg, transparent, transparent 5px, rgba(143, 77, 63, 0.25) 5px,
+      rgba(143, 77, 63, 0.25) 10px),
+    	repeating-linear-gradient(45deg, transparent, transparent 5px, rgba(143, 77, 63, 0.25) 5px,
+      rgba(143, 77, 63, 0.25) 10px);	
+       
+    }
+    </style>
+</head>
+<body>
+<div class="box"></div>
+<script>
+	const pressed = [];
+	const secretCode = 'pass';
+	const box = document.querySelector('.box');
+	window.addEventListener('keyup',function (e) {
+		pressed.push(e.key);
+		pressed.splice(-secretCode.length -1, pressed.length - secretCode.length);
+		// 刪除多餘的陣列，第一個參數代表要開始刪除的索引值，複數代表從後面開始
+  		// 第2個參數 從索引值開始要刪除的個數，如果是0則不進行刪除
+		if (pressed.join('').includes(secretCode)) {
+		// join表示陣列轉換成字串要用甚麼做區隔
+    	// includes表示字串中是否包含傳入的字串
+			box.style.display = 'block';
+		}
+	});
+</script>
+</body>
+</html>
