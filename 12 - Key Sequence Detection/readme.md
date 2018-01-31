@@ -1,4 +1,4 @@
-# js30-11紀錄&心得-Key Sequence Detection
+# js30-12紀錄&心得-Key Sequence Detection
 ## 目標
 >輸入隱藏的密碼後，顯示特效
 ## 步驟
