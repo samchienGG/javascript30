@@ -1,0 +1,132 @@
+# js30-19紀錄&心得-Webcam Fun
+## 主題
+用js驅動 `webcam` 紀錄影像資訊，並輸出到 `canvas` ，並用 `canvas` 對圖像進行拍照及濾鏡處理
+## 步驟
+### 1.啟動 local server
+在這層資料夾底下運行 `npm install` 來安裝 `browser-sync`
+安裝完之後透過 `npm start` 啟動local server
+### 2.取得影像
+透過 `navigator.mediaDevices.getUserMedia` 取得視訊影像
+```javascript=
+function getVideo() {
+    // 取得user的視訊裝置
+	navigator.mediaDevices.getUserMedia({
+		video:true,
+		audio:false
+	})
+        // 如果允許，則把MediaStream寫進html的video標籤並撥放
+        .then(function(localMediaStream) 
+		// console.log(localMediaStream);
+		video.src = window.URL.createObjectURL(localMediaStream);
+      	video.play();
+	})
+        // 失敗時印出錯誤
+        .catch(function(err) {
+		console.error(`OH NO!!!`, err);
+	})
+}
+```
+#### URL.createObjectURL
+Object URL是"blob:"再串上網址以及GUID。Object URL像個號碼牌，內容被儲存在瀏覽器記憶體中
+[資料來源](http://blog.darkthread.net/post-2014-03-12-html5-object-url.aspx)
+
+## 3.取得視訊資料，並輸出在canvas中
+```javascript=
+function paintToCanvas() {
+  // 設置寬高
+  const width = video.videoWidth;
+  const height = video.videoHeight;
+  canvas.width = width;
+  canvas.height = height;
+  // 用setInterval持續取得視訊資訊
+  return setInterval(function(){
+      
+  	ctx.drawImage(video, 0, 0, width, height);
+  },16);
+}
+```
+## 4.製作拍照功能
+```javascript=
+function takePhoto() {
+    // 拍照音效
+	snap.currentTime = 0;
+	snap.play();
+    // 利用toDataURL將canvas的內容轉換為base64的圖檔資訊
+	const data = canvas.toDataURL('image/jpeg');
+    // 用createElement建立一個a元素
+  	const link = document.createElement('a');
+    // 設置連結的位置為轉換後的圖檔位置
+  	link.href = data;
+    // 設置連結為下載
+  	link.setAttribute('download', 'handsome');
+    // 設置預覽圖
+  	link.innerHTML = `<img src="${data}" alt="Handsome Man" />`;
+  	// 在指定的節點前插入新的節點，如果未規定則插到最後
+    strip.insertBefore(link, strip.firsChild);
+}
+```
+## 5.濾鏡功能
+在paintToCanvas()中新增
+```javascript=
+    // 透過getImageData取得canvas資訊
+  	let pixels = ctx.getImageData(0, 0, width, height);
+    // 紅色濾鏡  	
+    pixels = redEffect(pixels);
+    // 色彩分離
+  	pixels = rgbSplit(pixels);
+    // 綠屏
+  	pixels = greenScreen(pixels);
+  	ctx.putImageData(pixels, 0, 0);
+```
+紅色濾鏡
+```javascript=
+function redEffect(pixels) {
+	for(let i = 0; i < pixels.data.length; i+=4) {
+    // 這邊不了解data的顏色資訊
+    pixels.data[i + 0] = pixels.data[i + 0] + 200; // RED
+    pixels.data[i + 1] = pixels.data[i + 1] - 50; // GREEN
+    pixels.data[i + 2] = pixels.data[i + 2] * 0.5; // Blue
+  }
+  return pixels;
+}
+```
+色彩分離
+```javascript=
+function rgbSplit(pixels) {
+  for(let i = 0; i < pixels.data.length; i+=4) {
+    pixels.data[i - 300] = pixels.data[i + 0]; // RED
+    pixels.data[i + 450] = pixels.data[i + 1]; // GREEN
+    // pixels.data[i + 450] = pixels.data[i + 2]; // Blue
+  }
+  return pixels;
+}
+```
+綠屏
+```javascript=
+function greenScreen(pixels) {
+  const levels = {};
+
+  document.querySelectorAll('.rgb input').forEach((input) => {
+    levels[input.name] = input.value;
+  });
+
+  for (i = 0; i < pixels.data.length; i = i + 4) {
+    red = pixels.data[i + 0];
+    green = pixels.data[i + 1];
+    blue = pixels.data[i + 2];
+    alpha = pixels.data[i + 3];
+
+    if (red >= levels.rmin
+      && green >= levels.gmin
+      && blue >= levels.bmin
+      && red <= levels.rmax
+      && green <= levels.gmax
+      && blue <= levels.bmax) {
+      // take it out!
+      pixels.data[i + 3] = 0;
+    }
+  }
+
+  return pixels;
+}
+```
